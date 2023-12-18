@@ -1,7 +1,7 @@
 class Student:
     def __init__(self, name, firstname, grades=None):
         """
-        PRE: name et firstname doivent être des cahines de caractère non vides et grade doit être une liste d'entiers.
+        PRE: name et firstname doivent être des cahines de caractère non vides et grade doit être une liste d'entiers entre 0 et 20.
         POST: un objet Student est créé avec les attributs name, firstname, et grade initialisés.
         """
         self.name = name
@@ -10,7 +10,7 @@ class Student:
 
     def add_grade(self, grade):
         """
-        PRE: grade doit être un entier.
+        PRE: grade doit être un entier entre 0 et 20.
         POST: La note est ajoutée à la liste des notes de l'étudiant.
         """
         self.grades.append(grade)
