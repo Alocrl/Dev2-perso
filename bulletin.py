@@ -1,11 +1,13 @@
 class Student:
-    def __init__(self, name, firstname, grades=None):
+    def __init__(self, name, firstname, classe="première", grades=None):
         """
-        PRE: name et firstname doivent être des cahines de caractère non vides et grade doit être une liste d'entiers entre 0 et 20.
+        PRE: name, firstname et classe doivent être des chaines de caractère non vides et grade doit être une liste
+             d'entiers entre 0 et 20.
         POST: un objet Student est créé avec les attributs name, firstname, et grade initialisés.
         """
         self.name = name
         self.firstname = firstname
+        self.classe = classe
         self.grades = grades or []
 
     def add_grade(self, grade):
@@ -41,6 +43,7 @@ class Student:
         """
         print("Nom: {}".format(self.name))
         print("Prénom: {}".format(self.firstname))
+        print("Classe: {}".format(self.classe))
         print("Notes: {}".format(str(self.grades)))
         print("Moyenne: {:.2f}".format(self.calc_average()))
 
@@ -52,22 +55,23 @@ def display_report(students):
           est affiché à la console.
     """
     print("Bulletin des élèves: ")
-    print("{:<20} {:<20} {:<20} {:<20}".format("Nom", "Prénom", "Notes", "Moyenne"))
-    print("-" * 72)
+    print("{:<10} {:<10} {:<10} {:<20} {:<10}".format("Nom", "Prénom", "Classe", "Notes", "Moyenne"))
+    print("-" * 65)
     for student in students:
         average = student.calc_average()
-        print("{:<20} {:<20} {:<20} {:<20.2f}".format(student.name, student.firstname, str(student.grades), average))
+        print("{:<10} {:<10} {:<10} {:<20} {:<10.2f}".format(student.name, student.firstname, student.classe,
+                                                             str(student.grades), average))
     print("")
     print("")
 
 
 # Exemple d'utilisation
-student1 = Student("Dupont", "Jean", [14, 16, 18])
-student2 = Student("Martin", "Alice", [12, 15, 17])
-student3 = Student("Durand", "Paul", [10, 11, 13])
-student4 = Student("Lefevre", "Sophie", [15, 17, 18])
-student5 = Student("Girard", "Thomas", [12, 14, 16])
-student6 = Student("Moreau", "Emma", [10, 11, 13])
+student1 = Student("Dupont", "Jean", "première", [14, 16, 18])
+student2 = Student("Martin", "Alice", "première", [12, 15, 17])
+student3 = Student("Durand", "Paul", "première", [10, 11, 13])
+student4 = Student("Lefevre", "Sophie", "deuxième",  [15, 17, 18])
+student5 = Student("Girard", "Thomas", "deuxième", [12, 14, 16])
+student6 = Student("Moreau", "Emma", "deuxième", [10, 11, 13])
 
 # Ajouter des notes
 student1.add_grade(20)
@@ -108,18 +112,19 @@ class Classe:
               est affiché à la console.
         """
         print("Bulletin de la classe {}:".format(self.name))
-        print("{:<20} {:<20} {:<20} {:<20}".format("Nom", "Prénom", "Notes", "Moyenne"))
-        print("-" * 72)
+        print("{:<10} {:<10} {:<10} {:<20} {:<10}".format("Nom", "Prénom", "Classe", "Notes", "Moyenne"))
+        print("-" * 65)
         for student in self.students:
             average = student.calc_average()
             print(
-                "{:<20} {:<20} {:<20} {:<20.2f}".format(student.name, student.firstname, str(student.grades), average))
+                "{:<10} {:<10} {:<10} {:<20} {:<10.2f}".format(student.name, student.firstname, student.classe,
+                                                               str(student.grades), average))
         print("\n")
 
 
 # Création de deux classes et ajout d'étudiants
-classe1 = Classe("2TL1", [student1, student2, student3])
-classe2 = Classe("2TL2", [student4, student5])
+classe1 = Classe("première", [student1, student2, student3])
+classe2 = Classe("deuxième", [student4, student5])
 
 # Ajouter un élève à la classe
 classe2.add_student(student6)
