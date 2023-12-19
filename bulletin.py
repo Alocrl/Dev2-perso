@@ -13,7 +13,7 @@ class Student:
         """
         Permet d'ajouter une nouvelle note à un élève
         PRE: /
-        POST: La note est ajoutée à la liste des notes de l'étudiant. 
+        POST: La note est ajoutée à la liste des notes de l'étudiant.
               Si grade n'est pas entre 0 et 20, un message est affiché
         """
         if 0 <= grade <= 20:
@@ -109,38 +109,39 @@ class Classe:
         print("\n")
 
 
-# Exemple d'utilisation
-student1 = Student("Dupont", "Jean", "première", [14, 16, 18])
-student2 = Student("Martin", "Alice", "première", [12, 15, 17])
-student3 = Student("Durand", "Paul", "première", [10, 11, 13])
-student4 = Student("Lefevre", "Sophie", "deuxième", [15, 17, 18])
-student5 = Student("Girard", "Thomas", "deuxième", [12, 14, 16])
-student6 = Student("Moreau", "Emma", "deuxième", [10, 11, 13])
+if __name__ == '__main__':
+    # Exemple d'utilisation
+    student1 = Student("Dupont", "Jean", "première", [14, 16, 18])
+    student2 = Student("Martin", "Alice", "première", [12, 15, 17])
+    student3 = Student("Durand", "Paul", "première", [10, 11, 13])
+    student4 = Student("Lefevre", "Sophie", "deuxième", [15, 17, 18])
+    student5 = Student("Girard", "Thomas", "deuxième", [12, 14, 16])
+    student6 = Student("Moreau", "Emma", "deuxième", [10, 11, 13])
 
-# Ajouter des notes
-student1.add_grade(20)
-student2.add_grade(14)
-student3.add_grade(16)
+    # Ajouter des notes
+    student1.add_grade(20)
+    student2.add_grade(14)
+    student3.add_grade(16)
 
-# Supprimer des notes
-student4.delete_grade(1)
-student3.delete_grade(0)
+    # Supprimer des notes
+    student4.delete_grade(1)
+    student3.delete_grade(0)
 
-liste_students = [student1, student2, student3, student4, student5, student6]
+    liste_students = [student1, student2, student3, student4, student5, student6]
 
-# Afficher le bulletin
-display_report(liste_students)
+    # Afficher le bulletin global
+    display_report(liste_students)
 
-# Création de deux classes et ajout d'étudiants
-classe1 = Classe("première", [student1, student2, student3])
-classe2 = Classe("deuxième", [student4, student5])
+    # Création de deux classes et ajout d'étudiants
+    classe1 = Classe("première", [student1, student2, student3])
+    classe2 = Classe("deuxième", [student4, student5])
 
-# Ajouter un élève à la classe
-classe2.add_student(student6)
+    # Ajouter un élève à la classe
+    classe2.add_student(student6)
 
-# Affichage du bulletin pour chaque classe
-classe1.display_report()
-classe2.display_report()
+    # Affichage du bulletin pour chaque classe
+    classe1.display_report()
+    classe2.display_report()
 
-# Afficher les informations détaillées d'un étudiant
-student1.display_informations()
+    # Afficher les informations détaillées d'un étudiant
+    student1.display_informations()
