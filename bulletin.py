@@ -1,8 +1,7 @@
 class Student:
-    def __init__(self, name, firstname, classe="première", grades=None):
+    def __init__(self, name: str, firstname: str, classe: str = "première", grades=None):
         """
-        PRE: name, firstname et classe doivent être des chaines de caractère non vides et grade doit être une liste
-             d'entiers entre 0 et 20.
+        PRE: grade doit être une liste de chiffres entre 0 et 20.
         POST: un objet Student est créé avec les attributs name, firstname, et grade initialisés.
         """
         self.name = name
@@ -12,14 +11,20 @@ class Student:
 
     def add_grade(self, grade):
         """
-        PRE: grade doit être un entier entre 0 et 20.
-        POST: La note est ajoutée à la liste des notes de l'étudiant.
+        Permet d'ajouter une nouvelle note à un élève
+        PRE: /
+        POST: La note est ajoutée à la liste des notes de l'étudiant. 
+              Si grade n'est pas entre 0 et 20, un message est affiché
         """
-        self.grades.append(grade)
+        if 0 <= grade <= 20:
+            self.grades.append(grade)
+        else:
+            print("Le chiffre doit être entre 0 et 20")
 
     def delete_grade(self, index):
         """
-        PRE: index doit être un entier valide (0 <= index < len(grades))
+        Permet de retire une note à un élève
+        PRE: /
         POST: La note à l'indice spécifié est supprimée de la liste des notes de l'étudiant, si l'indice est valide.
         """
         if 0 <= index < len(self.grades):
@@ -29,8 +34,9 @@ class Student:
 
     def calc_average(self):
         """
+        Calcule la moyenne d'un élève
         PRE:/
-        POST: La moyenne des notes de l'étudiant est renvoyée.
+        POST: La moyenne des notes de l'étudiant est renvoyée. Si il n'y a pas de note, la moyenne vaut 0.
         """
         if not self.grades:
             return 0
@@ -38,6 +44,7 @@ class Student:
 
     def display_informations(self):
         """
+        Affiche les informations d'un élève
         PRE: /
         POST: Les informations détaillées de l'étudiant (nom, prénom, notes, moyenne) sont affichées à la console.
         """
@@ -50,6 +57,7 @@ class Student:
 
 def display_report(students):
     """
+    Affiche le bulletin des élèves
     PRE: /
     POST: Le bulletin de la classe, incluant les noms, prénoms, notes et moyennes de chaque étudiant,
           est affiché à la console.
@@ -65,29 +73,6 @@ def display_report(students):
     print("")
 
 
-# Exemple d'utilisation
-student1 = Student("Dupont", "Jean", "première", [14, 16, 18])
-student2 = Student("Martin", "Alice", "première", [12, 15, 17])
-student3 = Student("Durand", "Paul", "première", [10, 11, 13])
-student4 = Student("Lefevre", "Sophie", "deuxième",  [15, 17, 18])
-student5 = Student("Girard", "Thomas", "deuxième", [12, 14, 16])
-student6 = Student("Moreau", "Emma", "deuxième", [10, 11, 13])
-
-# Ajouter des notes
-student1.add_grade(20)
-student2.add_grade(14)
-student3.add_grade(16)
-
-# Supprimer une note
-student4.delete_grade(1)
-student3.delete_grade(0)
-
-liste_students = [student1, student2, student3, student4, student5, student6]
-
-# Afficher le bulletin
-display_report(liste_students)
-
-
 class Classe:
     def __init__(self, name, students=None):
         """
@@ -100,6 +85,7 @@ class Classe:
 
     def add_student(self, student):
         """
+        Permet d'ajouter un étudiant à une classe
         PRE: students doit être un objet de la classe Student
         POST: L'étudiant est ajouté à la liste des étudiants de la classe.
         """
@@ -107,6 +93,7 @@ class Classe:
 
     def display_report(self):
         """
+        Affiche le bulletin par classe
         PRE: /
         POST: Le bulletin de la classe, incluant les noms, prénoms, notes et moyennes de chaque étudiant,
               est affiché à la console.
@@ -121,6 +108,28 @@ class Classe:
                                                                str(student.grades), average))
         print("\n")
 
+
+# Exemple d'utilisation
+student1 = Student("Dupont", "Jean", "première", [14, 16, 18])
+student2 = Student("Martin", "Alice", "première", [12, 15, 17])
+student3 = Student("Durand", "Paul", "première", [10, 11, 13])
+student4 = Student("Lefevre", "Sophie", "deuxième", [15, 17, 18])
+student5 = Student("Girard", "Thomas", "deuxième", [12, 14, 16])
+student6 = Student("Moreau", "Emma", "deuxième", [10, 11, 13])
+
+# Ajouter des notes
+student1.add_grade(20)
+student2.add_grade(14)
+student3.add_grade(16)
+
+# Supprimer des notes
+student4.delete_grade(1)
+student3.delete_grade(0)
+
+liste_students = [student1, student2, student3, student4, student5, student6]
+
+# Afficher le bulletin
+display_report(liste_students)
 
 # Création de deux classes et ajout d'étudiants
 classe1 = Classe("première", [student1, student2, student3])
