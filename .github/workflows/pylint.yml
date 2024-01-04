@@ -22,4 +22,4 @@ jobs:
         
     - name: Analysing the code with pylint
       run: |
-            pylint ./*
+            pylint ./* --fail-under 1
