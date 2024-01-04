@@ -33,7 +33,7 @@ class Calculator(cmd.Cmd):
         PRE: Les arguments 'x', 'y', 'z', ... doivent être des nombres.
         POST: Affiche le résultat de la somme de tous les nombres fournis.
         """
-        try
+        try:
             args = list(map(float, arg.split()))
             result = sum(args)
             result = round(result, 3)
