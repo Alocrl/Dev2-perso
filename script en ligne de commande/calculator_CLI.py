@@ -34,7 +34,7 @@ class Calculator(cmd.Cmd):
         """
         try:
             args = list(map(float, arg.split()))
-            resulte = sum(args)
+            result = sum(args)
             result = round(result, 3)
             print(Blue(f'Résultat : {result}'))
         except ValueError:
@@ -49,14 +49,14 @@ class Calculator(cmd.Cmd):
         try:
             args = list(map(float, arg.split()))
             result = args[0]
-            for num in args[1:]
+            for num in args[1:]:
                 result -= num
             result = round(result, 3)
             print(Blue(f'Résultat : {result}'))
         except ValueError:
             print(Red('Utilisation incorrecte. Exemple : subtract x y z ...'))
 
-    def do_multiply(self, arg)
+    def do_multiply(self, arg):
         """
         Multiplie les nombres.
         PRE: Les arguments 'x', 'y', 'z', ... doivent être des nombres.
