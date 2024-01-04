@@ -22,4 +22,5 @@ jobs:
         
     - name: Analysing the code with pylint
       run: |
-            pylint ./* --fail-under 1
+            pylint script en ligne de commande/calculator_CLI --fail-under 1
+            pylint script en ligne de commande/test_calculator_CLI 
