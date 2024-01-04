@@ -23,4 +23,4 @@ jobs:
     - name: Analysing the code with pylint
       run: |
             pylint "script en ligne de commande/calculator_CLI" --fail-under 1
-            pylint "script en ligne de commande/test_calculator_CLI" --fail-under 8
+            pylint "script en ligne de commande/test_calculator_CLI" --fail-under 9
