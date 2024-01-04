@@ -11,6 +11,7 @@ Red = lambda value: f"{Fore.RED}{value}{Style.RESET_ALL}"
 
 
 class Calculator(cmd.Cmd):
+    """calculatrice en ligne de commande"""
     intro = Green(f"Bonjour,\n" 
                   f"Vous pouvez désormais utiliser une calculatrice en ligne de commande.\n\n"
                   f"Voici la liste des opérations que vous puvez utiliser : \n"
