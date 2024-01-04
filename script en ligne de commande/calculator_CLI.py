@@ -1,11 +1,13 @@
 import cmd
 import math
+from typing import Callable, Any
+
 from colorama import Style, Fore
 
-Bright = lambda value: f"{Style.BRIGHT}{value}{Style.NORMAL}"
-Green = lambda value: f"{Fore.LIGHTGREEN_EX}{value}{Style.RESET_ALL}"
-Blue = lambda value: f"{Fore.BLUE}{value}{Style.RESET_ALL}"
-Red = lambda value: f"{Fore.RED}{value}{Style.RESET_ALL}"
+Bright: Callable[[Any], str] = lambda value: f"{Style.BRIGHT}{value}{Style.NORMAL}"
+Green: Callable[[Any], str] = lambda value: f"{Fore.LIGHTGREEN_EX}{value}{Style.RESET_ALL}"
+Blue: Callable[[Any], str] = lambda value: f"{Fore.BLUE}{value}{Style.RESET_ALL}"
+Red: Callable[[Any], str] = lambda value: f"{Fore.RED}{value}{Style.RESET_ALL}"
 
 
 class Calculator(cmd.Cmd):
@@ -73,7 +75,8 @@ class Calculator(cmd.Cmd):
     def do_divide(self, arg):
         """
         Divise les nombres.
-        PRE: Les arguments 'x' et 'y' doivent être des nombres. un des chiffres autre que le premier ne doit pas être zéro.
+        PRE: Les arguments 'x' et 'y' doivent être des nombres. 
+        Un des chiffres autre que le premier ne doit pas être zéro.
         POST: Affiche le résultat de la division x / y.
         """
         try:
