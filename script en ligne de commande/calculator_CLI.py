@@ -4,10 +4,10 @@ from typing import Callable, Any
 
 from colorama import Style, Fore
 
-Bright: Callable[[Any], str] = lambda value: f"{Style.BRIGHT}{value}{Style.NORMAL}"
+Bright = lambda value: f"{Style.BRIGHT}{value}{Style.NORMAL}"
 Green: Callable[[Any], str] = lambda value: f"{Fore.LIGHTGREEN_EX}{value}{Style.RESET_ALL}"
-Blue: Callable[[Any], str] = lambda value: f"{Fore.BLUE}{value}{Style.RESET_ALL}"
-Red: Callable[[Any], str] = lambda value: f"{Fore.RED}{value}{Style.RESET_ALL}"
+Blue = lambda value: f"{Fore.BLUE}{value}{Style.RESET_ALL}"
+Red = lambda value: f"{Fore.RED}{value}{Style.RESET_ALL}"
 
 
 class Calculator(cmd.Cmd):
