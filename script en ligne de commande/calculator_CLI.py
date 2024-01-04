@@ -1,16 +1,20 @@
 import cmd
 import math
-from typing import Callable, Any
-
 from colorama import Style, Fore
+import logging
+
+logging.basicConfig(filename='calculator.log', encoding='utf-8', level=logging.DEBUG,
+                    format='%(asctime)s %(levelname)s : %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+
 
 Bright = lambda value: f"{Style.BRIGHT}{value}{Style.NORMAL}"
-Green: Callable[[Any], str] = lambda value: f"{Fore.LIGHTGREEN_EX}{value}{Style.RESET_ALL}"
+Green = lambda value: f"{Fore.LIGHTGREEN_EX}{value}{Style.RESET_ALL}"
 Blue = lambda value: f"{Fore.BLUE}{value}{Style.RESET_ALL}"
 Red = lambda value: f"{Fore.RED}{value}{Style.RESET_ALL}"
 
 
 class Calculator(cmd.Cmd):
+    logging.info('Apllication lancée')
     """calculatrice en ligne de commande"""
     intro = Green(f"Bonjour,\n" 
                   f"Vous pouvez désormais utiliser une calculatrice en ligne de commande.\n\n"
@@ -38,8 +42,10 @@ class Calculator(cmd.Cmd):
             result = sum(args)
             result = round(result, 3)
             print(Blue(f'Résultat : {result}'))
+            logging.debug('Addition effectuée avec succès. Arguments : %s', args)
         except ValueError:
-            print(Red('Utilisation incorrecte. Exemple : add x y z ...'))
+            print(Red('Utilisation incorrecte. Exemple : add x y [z ...]'))
+            logging.error('Mauvais paramètres passés pour l\'addition. Arguments : %s', arg)
 
     def do_subtract(self, arg):
         """
@@ -54,8 +60,10 @@ class Calculator(cmd.Cmd):
                 result -= num
             result = round(result, 3)
             print(Blue(f'Résultat : {result}'))
+            logging.debug('Soustraction effectuée avec succès. Arguments : %s', args)
         except ValueError:
-            print(Red('Utilisation incorrecte. Exemple : subtract x y z ...'))
+            print(Red('Utilisation incorrecte. Exemple : subtract x y [z ...]'))
+            logging.error('Mauvais paramètres passés pour la soustraction. Arguments : %s', arg)
 
     def do_multiply(self, arg):
         """
@@ -70,14 +78,15 @@ class Calculator(cmd.Cmd):
                 result *= num
             result = round(result, 3)
             print(Blue(f'Résultat : {result}'))
+            logging.debug('Multiplication effectuée avec succès. Arguments : %s', args)
         except ValueError:
-            print(Red('Utilisation incorrecte. Exemple : multiply x y z ...'))
+            print(Red('Utilisation incorrecte. Exemple : multiply x y [z ...]'))
+            logging.error('Mauvais paramètres passés pour la multiplication. Arguments : %s', arg)
 
     def do_divide(self, arg):
         """
         Divise les nombres.
-        PRE: Les arguments 'x' et 'y' doivent être des nombres. 
-        Un des chiffres autre que le premier ne doit pas être zéro.
+        PRE: Les arguments doivent être des nombres. Un des chiffres autre que le premier ne doit pas être zéro.
         POST: Affiche le résultat de la division x / y.
         """
         try:
@@ -87,10 +96,13 @@ class Calculator(cmd.Cmd):
                 result /= num
             result = round(result, 3)
             print(Blue(f'Résultat : {result}'))
+            logging.debug('Division effectuée avec succès. Arguments : %s', args)
         except ZeroDivisionError:
-            print(Red('On ne peut par zéro.'))
+            print(Red('On ne peut diviser par zéro.'))
+            logging.warning('Mauvais paramètres passés pour la division. On ne peut pas diviser par 0')
         except ValueError:
-            print(Red('Utilisation incorrecte. Exemple : divide x y z ...'))
+            print(Red('Utilisation incorrecte. Exemple : divide x y [z ...]'))
+            logging.error('Mauvais paramètres passés pour la division. Arguments : %s', arg)
 
     def do_square(self, arg):
         """
@@ -103,8 +115,10 @@ class Calculator(cmd.Cmd):
             result = x ** 2
             result = round(result, 3)
             print(Blue(f'Résultat : {result}'))
+            logging.debug('Mise au carré effectuée avec succès. Arguments : %s', arg)
         except ValueError:
             print(Red('Utilisation incorrecte. Exemple : square x'))
+            logging.error('Mauvais paramètres passés pour la mise au carré. Arguments : %s', arg)
 
     def do_power(self, arg):
         """
@@ -113,12 +127,19 @@ class Calculator(cmd.Cmd):
         POST: Affiche le résultat de x élevé à la puissance y.
         """
         try:
+            args = list(map(float, arg.split()))
             x, y = map(float, arg.split())
             result = x ** y
             result = round(result, 3)
             print(Blue(f'Résultat : {result}'))
+            logging.debug('Puissance effectuée avec succès. Arguments : %s', args)
         except ValueError:
             print(Red('Utilisation incorrecte. Exemple : power x y'))
+            logging.error('Mauvais paramètres passés pour la puissance. Arguments : %s', arg)
+        except ZeroDivisionError:
+            print(Red('On ne peut élever zéro à une puissance négative.'))
+            logging.warning('Mauvais paramètres passés pour la puissance. '
+                            'On ne peut élever zéro à une puissance négative.')
 
     def do_sqrt(self, arg):
         """
@@ -132,10 +153,14 @@ class Calculator(cmd.Cmd):
                 result = x ** 0.5
                 result = round(result, 3)
                 print(Blue(f'Résultat : {result}'))
+                logging.debug('Racine carré effectuée avec succès. Arguments : %s', arg)
             else:
-                print(Red('Nombre négatif. La racine carrée n\'est pas définie.'))
+                print(Red('Nombre négatif. La racine carré n\'est pas définie.'))
+                logging.warning('Mauvais paramètres passés pour la racine carrée. '
+                                'La racine d\'un négatif n\'est pas définie')
         except ValueError:
             print(Red('Utilisation incorrecte. Exemple : sqrt x'))
+            logging.error('Mauvais paramètres passés pour la racine carré. Arguments : %s', arg)
 
     def do_factorial(self, arg):
         """
@@ -151,15 +176,25 @@ class Calculator(cmd.Cmd):
                     result = math.factorial(x)
                     result = round(result, 3)
                     print(Blue(f'Résultat : {result}'))
+                    logging.debug('Factoriel effectué avec succès. Arguments : %s', arg)
                 else:
                     print(Red('Nombre négatif. Le factoriel n\'est pas défini.'))
+                    logging.error('Mauvais paramètres passés pour le factoriel. '
+                                  'Le factoriel d\'un nombre négatif n\'est pas défini')
             else:
                 print(Red('Nombre non-entier. Le factoriel n\'est pas défini.'))
+                logging.error('Mauvais paramètres passés pour le factoriel. '
+                              'Le factoriel d\'un nombre non-entier n\'est pas défini')
         except ValueError:
             print(Red('Utilisation incorrecte. Exemple : factorial x'))
+            logging.error('Mauvais paramètres passés pour le factoriel. Arguments : %s', arg)
 
     def do_commands(self, arg):
-        """rappel des commandes"""
+        """
+        Affiches les commandes pouvant être utilisées
+        PRE: /
+        POST: Affiche les commandes pouvant être utilisées
+        """
         print(Green(f"{Bright('add')}  ->  additionner une suite de chiffres\n"
                     f"{Bright('subtract')}  ->  soustraire une suite de chiffres\n"
                     f"{Bright('multiply')}  ->  multiplier une suite de chiffres\n"
@@ -170,6 +205,7 @@ class Calculator(cmd.Cmd):
                     f"{Bright('factorial')}  ->  effectuer la factoriel d'un chiffre\n"
                     f"{Bright('commands')}  ->  pour vous rappeler les commandes\n"
                     f"{Bright('quit')}  ->  quitter la calculatrice\n"))
+        logging.info('Commandes affichées')
 
     def do_quit(self, arg):
         """
@@ -178,8 +214,8 @@ class Calculator(cmd.Cmd):
         POST: Affiche un message de sortie et termine l'application.
         """
         print(Blue('Sortie de la calculatrice !'))
+        logging.info('Application quittée')
         return True
-
 
 if __name__ == '__main__':
     Calculator().cmdloop()
