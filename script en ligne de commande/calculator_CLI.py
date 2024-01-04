@@ -159,6 +159,7 @@ class Calculator(cmd.Cmd):
             print(Red('Utilisation incorrecte. Exemple : factorial x'))
 
     def do_commands(self, arg):
+        """rappel des commandes"""
         print(Green(f"{Bright('add')}  ->  additionner une suite de chiffres\n"
                     f"{Bright('subtract')}  ->  soustraire une suite de chiffres\n"
                     f"{Bright('multiply')}  ->  multiplier une suite de chiffres\n"
