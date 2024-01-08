@@ -14,7 +14,7 @@ Red = lambda value: f"{Fore.RED}{value}{Style.RESET_ALL}"
 
 
 class Calculator(cmd.Cmd):
-    logging.info('Apllication lancée')
+    logging.info('Application lancée')
     """calculatrice en ligne de commande"""
     intro = Green(f"Bonjour,\n" 
                   f"Vous pouvez désormais utiliser une calculatrice en ligne de commande.\n\n"
@@ -37,7 +37,7 @@ class Calculator(cmd.Cmd):
         PRE: Les arguments 'x', 'y', 'z', ... doivent être des nombres.
         POST: Affiche le résultat de la somme de tous les nombres fournis.
         """
-        try:
+        try :
             args = list(map(float, arg.split()))
             result = sum(args)
             result = round(result, 3)
